@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>年会抽奖</title>
+  <title>Team Lucky Draw</title>
   <style>
     :root {
-      --red: #c9152f;
-      --gold: #f6c453;
-      --dark: #2b1d1d;
-      --light: #fff9e6;
+      --red: #e85a70;
+      --gold: #f0cf65;
+      --dark: #1c1b29;
+      --light: #fff7e6;
+      --card: #f7df79;
+      --brand-blue: #4a63f0;
+      --brand-cyan: #4fc3d6;
+      --brand-green: #5ecf7e;
+      --brand-yellow: #f0cf65;
+      --retro-pink: #f38abf;
+      --retro-purple: #8b6bf2;
+      --retro-orange: #f2a15f;
+      --retro-black: #12121a;
     }
 
     * {
@@ -18,9 +27,9 @@
 
     body {
       margin: 0;
-      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      color: var(--dark);
-      background: radial-gradient(circle at top, #fff3cc 0%, #fbe1a6 45%, #f7c67a 100%);
+      font-family: "Courier New", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--retro-black);
+      background: linear-gradient(135deg, #f28a6a 0%, #f091c4 50%, #8b6bf2 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -29,13 +38,33 @@
     }
 
     .card {
-      width: min(960px, 100%);
-      background: #fffdf6;
-      border-radius: 20px;
-      padding: 28px 28px 32px;
-      box-shadow: 0 16px 50px rgba(80, 30, 20, 0.25);
+      width: min(1240px, 100%);
+      background: #f7df79;
+      border-radius: 18px;
+      padding: 26px 26px 32px;
+      box-shadow: 0 18px 0 #000, 0 20px 40px rgba(0, 0, 0, 0.35);
       position: relative;
       overflow: hidden;
+      border: 4px solid #000;
+    }
+
+    .logo-corner {
+      position: absolute;
+      top: 20px;
+      right: 18px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 14px;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 18px;
     }
 
     .card::before,
@@ -45,7 +74,7 @@
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(246, 196, 83, 0.5), rgba(201, 21, 47, 0));
+      background: radial-gradient(circle, rgba(243, 138, 191, 0.35), rgba(243, 138, 191, 0));
       top: -80px;
       right: -60px;
     }
@@ -55,19 +84,59 @@
       right: auto;
       bottom: -100px;
       left: -80px;
+      background: radial-gradient(circle, rgba(74, 99, 240, 0.35), rgba(74, 99, 240, 0));
     }
 
     h1 {
       margin: 0 0 6px;
       text-align: center;
-      color: var(--red);
-      letter-spacing: 2px;
+      color: #000;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     .subtitle {
       text-align: center;
       margin: 0 0 24px;
-      color: #7a4b2b;
+      color: #2f2f2f;
+    }
+
+    .hero {
+      text-align: left;
+      padding: 10px 6px 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .hero .tagline {
+      color: #5a6b7a;
+      margin: 0 0 20px;
+    }
+
+    .hero .meta {
+      display: flex;
+      justify-content: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      background: #fff;
+      border: 2px solid #000;
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 3px 3px 0 #000;
     }
 
     .main {
@@ -76,16 +145,29 @@
       gap: 20px;
     }
 
+    .draw-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 20px;
+    }
+
     .panel {
-      background: var(--light);
-      border-radius: 16px;
+      background: #fff7e6;
+      border-radius: 12px;
       padding: 20px;
-      border: 2px solid #f3d58a;
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0 #000;
     }
 
     .rolling-box {
-      border: 3px dashed var(--red);
-      border-radius: 18px;
+      border: 3px dashed #000;
+      border-radius: 14px;
       padding: 26px;
       text-align: center;
       background: #fff;
@@ -94,15 +176,194 @@
 
     .rolling-name {
       font-size: 36px;
-      font-weight: 700;
-      color: var(--red);
+      font-weight: 800;
+      color: #000;
       letter-spacing: 2px;
       min-height: 44px;
+      text-transform: uppercase;
+    }
+
+    .host-avatar {
+      margin: 12px auto 0;
+      width: 96px;
+      height: 96px;
+      border-radius: 16px;
+      border: 3px solid #000;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .host-avatar svg {
+      width: 80px;
+      height: 80px;
+      display: block;
+    }
+
+    .gacha-machine {
+      position: relative;
+      margin-top: 18px;
+      height: 180px;
+      background: linear-gradient(180deg, #fff 0%, #ffeaa6 100%);
+      border-radius: 18px;
+      border: 3px solid #000;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .gacha-top {
+      position: absolute;
+      top: 10px;
+      width: 110px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid #000;
+      background: rgba(255, 111, 182, 0.2);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .gacha-base {
+      position: absolute;
+      bottom: 16px;
+      width: 140px;
+      height: 60px;
+      background: #4a63f0;
+      border-radius: 14px;
+      box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.22);
+      border: 3px solid #000;
+    }
+
+    .gacha-knob {
+      position: absolute;
+      right: 38px;
+      bottom: 30px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f0cf65;
+      border: 2px solid #000;
+    }
+
+    .gacha-balls {
+      position: absolute;
+      top: 26px;
+      display: grid;
+      grid-template-columns: repeat(4, 16px);
+      gap: 6px;
+    }
+
+    .ball {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #5ecf7e;
+      box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.1);
+      border: 2px solid #000;
+    }
+
+    .ball:nth-child(2n) {
+      background: #4fc3d6;
+    }
+
+    .ball:nth-child(3n) {
+      background: #f0cf65;
+    }
+
+    .gacha-machine::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 0, 0, 0.5);
+      top: 20px;
+    }
+
+    .is-rolling .gacha-machine {
+      animation: gacha-shake 0.5s ease-in-out infinite;
+    }
+
+    .is-rolling .gacha-knob {
+      animation: gacha-spin 0.6s linear infinite;
+      transform-origin: center;
+    }
+
+    .is-rolling .ball {
+      animation: ball-bounce 0.6s ease-in-out infinite;
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      animation: sparkle 2.4s ease-in-out infinite;
+    }
+
+
+    .sparkle:nth-child(2) { left: 12%; top: 18%; animation-delay: 0.4s; }
+    .sparkle:nth-child(3) { left: 78%; top: 22%; animation-delay: 0.8s; }
+    .sparkle:nth-child(4) { left: 30%; top: 70%; animation-delay: 1.2s; }
+    .sparkle:nth-child(5) { left: 68%; top: 64%; animation-delay: 1.6s; }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0.6); opacity: 0.4; }
+      50% { transform: scale(1); opacity: 0.9; }
+    }
+
+    .lucky-timer {
+      display: grid;
+      gap: 10px;
+    }
+
+    .lucky-timer .timer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .timer-badge {
+      background: #f0cf65;
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    @keyframes gacha-shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(1px, -1px) rotate(-1deg); }
+      50% { transform: translate(-1px, 1px) rotate(1deg); }
+      75% { transform: translate(1px, 1px) rotate(0deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    @keyframes gacha-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes ball-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
     .status {
       margin-top: 12px;
-      color: #8a5a3c;
+      color: #000;
       font-size: 14px;
     }
 
@@ -115,15 +376,22 @@
 
     button {
       flex: 1;
-      background: var(--red);
+      background: #4a63f0;
       color: #fff;
-      border: none;
-      border-radius: 12px;
+      border: 3px solid #000;
+      border-radius: 10px;
       padding: 12px 18px;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow: 0 10px 20px rgba(201, 21, 47, 0.2);
+      box-shadow: 4px 4px 0 #000;
+      text-transform: uppercase;
+    }
+
+    .primary-cta {
+      display: block;
+      margin: 16px auto 0;
+      max-width: 220px;
     }
 
     button:hover:enabled {
@@ -137,9 +405,11 @@
     }
 
     .results h3,
-    .remaining h3 {
+    .remaining h3,
+    .steps h3 {
       margin: 0 0 12px;
-      color: var(--red);
+      color: #000;
+      text-transform: uppercase;
     }
 
     ul {
@@ -154,8 +424,9 @@
       background: #fff;
       border-radius: 10px;
       padding: 10px 12px;
-      border: 1px solid #f2d3a4;
-      font-size: 14px;
+      border: 2px solid #000;
+      font-size: 15px;
+      box-shadow: 3px 3px 0 #000;
     }
 
     .badge {
@@ -163,181 +434,635 @@
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 12px;
-      color: #fff;
-      background: var(--red);
+      color: #000;
+      background: #f0cf65;
       margin-right: 6px;
+      border: 2px solid #000;
     }
 
     .remaining-list li {
       display: flex;
       justify-content: space-between;
-      background: #fff7e8;
+      background: #fff;
       border-radius: 8px;
       padding: 8px 12px;
       font-size: 14px;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 0;
+      font-size: 15px;
+      color: #000;
+    }
+
+    .steps span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .steps .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ffd33d;
+      color: #000;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      border: 2px solid #000;
+    }
+
+    .highlight {
+      color: #4a63f0;
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .footer {
       margin-top: 18px;
       text-align: center;
-      color: #8a5a3c;
+      color: #000;
       font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .illustration {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      max-width: 520px;
+    }
+
+    .illustration .icon-card {
+      background: #fff;
+      border: 3px solid #000;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: center;
+      color: #000;
+      font-size: 12px;
+      transition: transform 0.3s ease;
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .illustration svg {
+      width: 40px;
+      height: 40px;
+      display: block;
+      margin: 0 auto 6px;
+    }
+
+    .floaty {
+      animation: floaty 4s ease-in-out infinite;
+    }
+
+    .floaty:nth-child(2n) {
+      animation-duration: 5s;
+    }
+
+    .floaty:nth-child(3n) {
+      animation-duration: 6s;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero h1 {
+        text-align: center;
+      }
+      .hero .meta {
+        justify-content: center;
+      }
+      .illustration {
+        margin: 18px auto 0;
+      }
     }
 
     @media (max-width: 820px) {
+      .draw-grid {
+        grid-template-columns: 1fr;
+      }
       .main {
         grid-template-columns: 1fr;
+      }
+      .logo-corner {
+        top: 12px;
+        right: 14px;
       }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>年会抽奖</h1>
-    <p class="subtitle">两位老板抽奖 · 共五份奖品 · 中奖不重复</p>
-
-    <div class="main">
-      <div class="panel">
-        <div class="rolling-box">
-          <div id="rollingName" class="rolling-name">准备开始</div>
-          <div id="statusText" class="status">等待抽奖</div>
+    <div class="logo-corner">BASF</div>
+    <div class="sparkles" aria-hidden="true">
+      <span class="sparkle" style="left: 6%; top: 30%;"></span>
+      <span class="sparkle"></span>
+      <span class="sparkle"></span>
+      <span class="sparkle"></span>
+      <span class="sparkle"></span>
+    </div>
+    <section id="homeView" class="hero">
+      <div>
+        <h1>BREn APAC Team Lucky Draw</h1>
+        <p class="tagline">Energy team edition · 5 prizes · No repeat winners</p>
+        <div class="meta">
+          <span class="pill">Accountability · Own it</span>
+          <span class="pill">Speed · Drive it</span>
+          <span class="pill">Improvement Mindset · Excel in it</span>
         </div>
-        <div class="buttons">
-          <button id="bossA">老板 A 抽奖</button>
-          <button id="bossB">老板 B 抽奖</button>
+        <button id="enterButton" class="primary-cta">Enter Draw</button>
+      </div>
+      <div class="illustration" aria-hidden="true">
+        <div class="icon-card floaty">
+          <svg viewBox="0 0 64 64" role="img">
+            <circle cx="32" cy="32" r="28" fill="#fff" stroke="#000" stroke-width="2" />
+            <path d="M32 10 L36 30 L32 28 L28 30 Z" fill="#2f52ff" stroke="#000" stroke-width="1" />
+            <path d="M32 30 L18 52 L32 44 L46 52 Z" fill="#00c2ff" stroke="#000" stroke-width="1" />
+            <circle cx="32" cy="32" r="4" fill="#2f52ff" stroke="#000" stroke-width="1" />
+          </svg>
+        </div>
+        <div class="icon-card floaty">
+          <svg viewBox="0 0 64 64" role="img">
+            <rect x="12" y="20" width="40" height="28" rx="4" fill="#fff" stroke="#000" stroke-width="2" />
+            <path d="M12 40 Q32 30 52 40" fill="none" stroke="#2f52ff" stroke-width="2" />
+            <rect x="16" y="44" width="32" height="6" fill="#00c2ff" stroke="#000" stroke-width="2" />
+            <path d="M20 20 L28 32 L36 20 L44 32" fill="none" stroke="#000" stroke-width="2" />
+          </svg>
+        </div>
+        <div class="icon-card floaty">
+          <svg viewBox="0 0 64 64" role="img">
+            <rect x="10" y="28" width="44" height="20" rx="6" fill="#fff" stroke="#000" stroke-width="2" />
+            <rect x="18" y="18" width="28" height="12" fill="#ffd33d" stroke="#000" stroke-width="2" />
+            <path d="M22 28 C24 20, 40 20, 42 28" fill="none" stroke="#000" stroke-width="2" />
+            <circle cx="24" cy="38" r="3" fill="#2bd96b" stroke="#000" stroke-width="1" />
+            <circle cx="40" cy="38" r="3" fill="#2bd96b" stroke="#000" stroke-width="1" />
+          </svg>
+        </div>
+        <div class="icon-card floaty">
+          <svg viewBox="0 0 64 64" role="img">
+            <rect x="10" y="18" width="44" height="28" rx="4" fill="#fff" stroke="#000" stroke-width="2" />
+            <line x1="14" y1="22" x2="50" y2="22" stroke="#000" stroke-width="2" />
+            <line x1="14" y1="28" x2="50" y2="28" stroke="#000" stroke-width="2" />
+            <line x1="14" y1="34" x2="50" y2="34" stroke="#000" stroke-width="2" />
+            <line x1="14" y1="40" x2="50" y2="40" stroke="#000" stroke-width="2" />
+            <rect x="20" y="46" width="24" height="6" fill="#2f52ff" stroke="#000" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="drawView" class="hidden">
+      <h1>Team Lucky Draw</h1>
+      <p class="subtitle">Thanks to our sponsors Matthias and Jian :) 🎉✨🤝</p>
+
+      <div class="draw-grid">
+        <div class="stack">
+          <div class="panel">
+            <div class="rolling-box">
+              <div id="rollingName" class="rolling-name">Ready</div>
+              <div id="statusText" class="status">Pick a host to start</div>
+            <div id="hostAvatar" class="host-avatar hidden" aria-hidden="true"></div>
+            </div>
+            <div class="buttons">
+              <button id="selectBoss">Pick Host</button>
+              <button id="selectPrize" disabled>Pick Prize</button>
+              <button id="drawWinner" disabled>Draw Winner</button>
+            </div>
+            <div class="gacha-machine" aria-hidden="true">
+              <div class="gacha-top"></div>
+              <div class="gacha-balls">
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+              </div>
+              <div class="gacha-base"></div>
+              <div class="gacha-knob"></div>
+            </div>
+            <div class="illustration" aria-hidden="true" style="margin-top: 18px;">
+              <div class="icon-card floaty">Curiosity</div>
+              <div class="icon-card floaty">Creativity</div>
+              <div class="icon-card floaty">Collaboration</div>
+              <div class="icon-card floaty">Innovation</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="panel steps">
+            <span><span class="dot">1</span>Host: <span id="bossDisplay" class="highlight">Not selected</span></span>
+            <span><span class="dot">2</span>Prize: <span id="prizeDisplay" class="highlight">Not selected</span></span>
+            <span><span class="dot">3</span>Winner: <span id="winnerDisplay" class="highlight">Waiting</span></span>
+          </div>
+          <div class="panel results">
+            <h3>Winners</h3>
+            <ul id="resultList">
+              <li class="result-item">No results yet</li>
+            </ul>
+          </div>
+          <div id="luckyTimerPanel" class="panel lucky-timer hidden">
+            <h3>Lucky Prize Timer</h3>
+            <div id="luckyTimerNote" class="status">Start the 30s blessing after the winner is announced.</div>
+            <div class="timer-row">
+              <span id="luckyTimerBadge" class="timer-badge">30s</span>
+              <button id="startLuckyTimer">Start 30s Timer</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="panel results">
-        <h3>中奖结果</h3>
-        <ul id="resultList">
-          <li class="result-item">暂无结果</li>
-        </ul>
+      <div class="main" style="margin-top: 18px;">
+        <div class="panel remaining">
+          <h3>Remaining Prizes</h3>
+          <ul id="prizeList" class="remaining-list"></ul>
+        </div>
+        <div class="panel remaining">
+          <h3>Remaining Participants</h3>
+          <ul id="participantList" class="remaining-list"></ul>
+        </div>
       </div>
-    </div>
 
-    <div class="panel remaining" style="margin-top: 18px;">
-      <h3>剩余奖品</h3>
-      <ul id="prizeList" class="remaining-list"></ul>
-    </div>
-
-    <div class="footer">祝大家好运！</div>
+      <div class="footer">Good luck, team!</div>
+    </section>
   </div>
 
   <script>
-    const participants = ["张三", "李四", "王五", "赵六", "钱七", "孙八", "周九", "吴十"];
-    const prizes = ["特等奖", "一等奖", "二等奖", "三等奖", "幸运奖"];
+    const bosses = ["Matthias Lang", "Jian Zhang"];
+    const participants = [
+      "Yiming GAO",
+      "Irene ZHA",
+      "Fred XU",
+      "Liu WANG",
+      "Xuebei TAN",
+      "Arno HSU",
+      "Leo ZHENG",
+      "Tina LIU"
+    ];
+    const prizes = [
+      "1st Prize",
+      "2nd Prize",
+      "2nd Prize",
+      "Mystery Lucky Prize A",
+      "Mystery Lucky Prize B"
+    ];
 
-    const state = {
-      remainingParticipants: [...participants],
-      remainingPrizes: [...prizes],
-      winners: [],
-      rolling: false
+    const luckyPrizeNotes = {
+      "Mystery Lucky Prize A": "Matthias delivers a 30s New Year wish or appreciation.",
+      "Mystery Lucky Prize B": "Jian delivers a 30s New Year wish or appreciation."
     };
 
+    const luckyPrizeBossMap = {
+      "Mystery Lucky Prize A": "Matthias Lang",
+      "Mystery Lucky Prize B": "Jian Zhang"
+    };
+
+    const state = {
+      remainingParticipants: [],
+      remainingPrizes: [],
+      history: [],
+      currentBoss: null,
+      currentPrize: null,
+      currentPrizeIndex: null,
+      rolling: false,
+      phase: "home"
+    };
+
+    const homeView = document.getElementById("homeView");
+    const drawView = document.getElementById("drawView");
+    const enterButton = document.getElementById("enterButton");
+    const selectBossButton = document.getElementById("selectBoss");
+    const selectPrizeButton = document.getElementById("selectPrize");
+    const drawWinnerButton = document.getElementById("drawWinner");
+    const drawCard = document.querySelector(".card");
+
+    const bossDisplay = document.getElementById("bossDisplay");
+    const prizeDisplay = document.getElementById("prizeDisplay");
+    const winnerDisplay = document.getElementById("winnerDisplay");
     const rollingName = document.getElementById("rollingName");
     const statusText = document.getElementById("statusText");
     const resultList = document.getElementById("resultList");
     const prizeList = document.getElementById("prizeList");
-    const bossAButton = document.getElementById("bossA");
-    const bossBButton = document.getElementById("bossB");
+    const participantList = document.getElementById("participantList");
+    const hostAvatar = document.getElementById("hostAvatar");
+    const luckyTimerPanel = document.getElementById("luckyTimerPanel");
+    const luckyTimerNote = document.getElementById("luckyTimerNote");
+    const luckyTimerBadge = document.getElementById("luckyTimerBadge");
+    const startLuckyTimerButton = document.getElementById("startLuckyTimer");
 
-    const updatePrizeList = () => {
-      prizeList.innerHTML = "";
-      if (state.remainingPrizes.length === 0) {
-        const item = document.createElement("li");
-        item.textContent = "奖品已抽完";
-        prizeList.appendChild(item);
-        return;
-      }
-      state.remainingPrizes.forEach((prize, index) => {
-        const item = document.createElement("li");
-        item.innerHTML = `<span>${prize}</span><span>第 ${index + 1} 份</span>`;
-        prizeList.appendChild(item);
-      });
-    };
-
-    const updateResults = () => {
-      resultList.innerHTML = "";
-      if (state.winners.length === 0) {
-        const item = document.createElement("li");
-        item.className = "result-item";
-        item.textContent = "暂无结果";
-        resultList.appendChild(item);
-        return;
-      }
-      state.winners.forEach(({ boss, winner, prize }) => {
-        const item = document.createElement("li");
-        item.className = "result-item";
-        item.innerHTML = `<span class="badge">${boss}</span>${winner} 获得 ${prize}`;
-        resultList.appendChild(item);
-      });
+    const luckyTimerState = {
+      interval: null,
+      remaining: 30,
+      running: false,
+      prize: null,
+      winner: null,
+      boss: null
     };
 
     const updateStatus = (message) => {
       statusText.textContent = message;
     };
 
-    const setButtonsDisabled = (disabled) => {
-      bossAButton.disabled = disabled;
-      bossBButton.disabled = disabled;
-    };
-
-    const endIfFinished = () => {
-      if (state.remainingPrizes.length === 0 || state.remainingParticipants.length === 0) {
-        updateStatus("抽奖结束");
-        setButtonsDisabled(true);
-        return true;
+    const updateRemainingList = (listElement, items, emptyText) => {
+      listElement.innerHTML = "";
+      if (items.length === 0) {
+        const item = document.createElement("li");
+        item.textContent = emptyText;
+        listElement.appendChild(item);
+        return;
       }
-      return false;
+      items.forEach((itemText, index) => {
+        const item = document.createElement("li");
+        item.innerHTML = `<span>${itemText}</span><span>No. ${index + 1}</span>`;
+        listElement.appendChild(item);
+      });
     };
 
-    const startRolling = (bossLabel) => {
-      if (state.rolling || endIfFinished()) {
+    const updateHistory = () => {
+      resultList.innerHTML = "";
+      if (state.history.length === 0) {
+        const item = document.createElement("li");
+        item.className = "result-item";
+        item.textContent = "No results yet";
+        resultList.appendChild(item);
+        return;
+      }
+      state.history.forEach(({ boss, prize, winner }) => {
+        const item = document.createElement("li");
+        item.className = "result-item";
+        const note = luckyPrizeNotes[prize] ? ` · ${luckyPrizeNotes[prize]}` : "";
+        item.innerHTML = `<span class="badge">${boss}</span>${winner} wins ${prize}${note}`;
+        resultList.appendChild(item);
+      });
+    };
+
+    const updateSteps = () => {
+      bossDisplay.textContent = state.currentBoss || "Not selected";
+      prizeDisplay.textContent = state.currentPrize || "Not selected";
+      winnerDisplay.textContent = state.history.length
+        ? state.history[state.history.length - 1].winner
+        : "Waiting";
+      updateHostAvatar();
+    };
+
+    const updateHostAvatar = () => {
+      if (!hostAvatar) {
+        return;
+      }
+      if (!state.currentBoss) {
+        hostAvatar.classList.add("hidden");
+        hostAvatar.innerHTML = "";
+        return;
+      }
+      const isJian = state.currentBoss === "Jian Zhang";
+      const initials = isJian ? "JZ" : "ML";
+      const accent = isJian ? "#ff6fb6" : "#2f52ff";
+      const hobby = isJian
+        ? `<path d="M24 88 L60 72 L96 88" fill="none" stroke="#000" stroke-width="4"/>
+           <line x1="60" y1="72" x2="60" y2="58" stroke="#000" stroke-width="4"/>
+           <circle cx="60" cy="52" r="6" fill="#00c2ff" stroke="#000" stroke-width="3"/>`
+        : `<circle cx="30" cy="86" r="10" fill="#fff" stroke="#000" stroke-width="4"/>
+           <circle cx="90" cy="86" r="10" fill="#fff" stroke="#000" stroke-width="4"/>
+           <line x1="30" y1="86" x2="60" y2="72" stroke="#000" stroke-width="4"/>
+           <line x1="60" y1="72" x2="90" y2="86" stroke="#000" stroke-width="4"/>
+           <line x1="60" y1="72" x2="60" y2="60" stroke="#000" stroke-width="4"/>`;
+      hostAvatar.classList.remove("hidden");
+      hostAvatar.innerHTML = `
+        <svg viewBox="0 0 120 120" role="img" aria-label="${state.currentBoss}">
+          <rect x="6" y="6" width="108" height="108" rx="22" fill="#fff" stroke="#000" stroke-width="4"/>
+          <circle cx="60" cy="44" r="20" fill="${accent}" stroke="#000" stroke-width="4"/>
+          <rect x="30" y="70" width="60" height="30" rx="14" fill="#ffd33d" stroke="#000" stroke-width="4"/>
+          ${hobby}
+          <text x="60" y="68" text-anchor="middle" font-size="14" font-family="Courier New, sans-serif" fill="#000">${initials}</text>
+        </svg>
+      `;
+    };
+
+    const updateButtons = () => {
+      const canSelectBoss = state.remainingParticipants.length > 0 && state.remainingPrizes.length > 0;
+      const canSelectPrize = state.remainingPrizes.length > 0;
+      const canDrawWinner = state.remainingParticipants.length > 0 && !!state.currentPrize;
+      selectBossButton.disabled = state.rolling || state.phase !== "selectBoss" || !canSelectBoss;
+      selectPrizeButton.disabled = state.rolling || state.phase !== "selectPrize" || !canSelectPrize;
+      drawWinnerButton.disabled = state.rolling || state.phase !== "drawWinner" || !canDrawWinner;
+    };
+
+    const setRolling = (value) => {
+      state.rolling = value;
+      drawView.classList.toggle("is-rolling", value);
+      updateButtons();
+    };
+
+    const updateAll = () => {
+      updateRemainingList(prizeList, state.remainingPrizes, "All prizes drawn");
+      const sortedParticipants = [...state.remainingParticipants].sort((a, b) =>
+        a.localeCompare(b)
+      );
+      updateRemainingList(participantList, sortedParticipants, "No participants left");
+      updateHistory();
+      updateSteps();
+      updateLuckyTimerUI();
+      updateButtons();
+    };
+
+    const setPhase = (phase, statusMessage) => {
+      state.phase = phase;
+      if (statusMessage) {
+        updateStatus(statusMessage);
+      }
+      updateButtons();
+    };
+
+    const enterDraw = () => {
+      homeView.classList.add("hidden");
+      drawView.classList.remove("hidden");
+      state.remainingParticipants = [...participants];
+      state.remainingPrizes = [...prizes];
+      state.history = [];
+      state.currentBoss = null;
+      state.currentPrize = null;
+      state.currentPrizeIndex = null;
+      resetLuckyTimer();
+      setRolling(false);
+      setPhase("selectBoss", "Pick a host to start");
+      updateAll();
+    };
+
+    const randomPick = (list) => list[Math.floor(Math.random() * list.length)];
+
+    const selectBoss = () => {
+      if (state.phase !== "selectBoss" || state.rolling) {
+        return;
+      }
+      state.currentBoss = randomPick(bosses);
+      setPhase("selectPrize", `Host selected: ${state.currentBoss}. Pick a prize.`);
+      updateSteps();
+    };
+
+    const selectPrize = () => {
+      if (state.phase !== "selectPrize" || state.rolling) {
+        return;
+      }
+      if (state.remainingPrizes.length === 0) {
+        setPhase("finished", "Draw complete");
+        return;
+      }
+      const prizeIndex = Math.floor(Math.random() * state.remainingPrizes.length);
+      state.currentPrizeIndex = prizeIndex;
+      state.currentPrize = state.remainingPrizes[prizeIndex];
+      setPhase("drawWinner", `Prize selected: ${state.currentPrize}. Draw a winner.`);
+      updateAll();
+    };
+
+    const drawWinner = () => {
+      if (state.phase !== "drawWinner" || state.rolling) {
+        return;
+      }
+      if (state.remainingParticipants.length === 0) {
+        setPhase("finished", "Draw complete");
         return;
       }
 
-      state.rolling = true;
-      setButtonsDisabled(true);
-      updateStatus(`${bossLabel} 正在抽奖...`);
+      setRolling(true);
+      updateStatus(`${state.currentBoss} is drawing ${state.currentPrize}...`);
 
       let current = state.remainingParticipants[0];
       rollingName.textContent = current;
 
       const rollingTimer = setInterval(() => {
-        const index = Math.floor(Math.random() * state.remainingParticipants.length);
-        current = state.remainingParticipants[index];
+        current = randomPick(state.remainingParticipants);
         rollingName.textContent = current;
       }, 80);
 
       const duration = 2200 + Math.floor(Math.random() * 1200);
       setTimeout(() => {
         clearInterval(rollingTimer);
-
         const winnerIndex = Math.floor(Math.random() * state.remainingParticipants.length);
         const winner = state.remainingParticipants.splice(winnerIndex, 1)[0];
 
-        const prizeIndex = Math.floor(Math.random() * state.remainingPrizes.length);
-        const prize = state.remainingPrizes.splice(prizeIndex, 1)[0];
+        state.history.push({
+          boss: state.currentBoss,
+          prize: state.currentPrize,
+          winner
+        });
 
-        state.winners.push({ boss: bossLabel, winner, prize });
         rollingName.textContent = winner;
-        updateResults();
-        updatePrizeList();
-
-        state.rolling = false;
-        if (!endIfFinished()) {
-          setButtonsDisabled(false);
-          updateStatus("等待抽奖");
+        if (state.currentPrizeIndex !== null) {
+          state.remainingPrizes.splice(state.currentPrizeIndex, 1);
         }
+        state.currentBoss = null;
+        state.currentPrize = null;
+        state.currentPrizeIndex = null;
+        setRolling(false);
+
+        if (luckyPrizeBossMap[state.history[state.history.length - 1].prize]) {
+          showLuckyTimer(state.history[state.history.length - 1]);
+        } else {
+          resetLuckyTimer();
+        }
+
+        if (state.remainingParticipants.length === 0 || state.remainingPrizes.length === 0) {
+          setPhase("finished", "Draw complete");
+        } else {
+          setPhase("selectBoss", "Pick a host to start");
+        }
+        updateAll();
       }, duration);
     };
 
-    bossAButton.addEventListener("click", () => startRolling("老板 A"));
-    bossBButton.addEventListener("click", () => startRolling("老板 B"));
+    const resetLuckyTimer = () => {
+      if (luckyTimerState.interval) {
+        clearInterval(luckyTimerState.interval);
+        luckyTimerState.interval = null;
+      }
+      luckyTimerState.remaining = 30;
+      luckyTimerState.running = false;
+      luckyTimerState.prize = null;
+      luckyTimerState.winner = null;
+      luckyTimerState.boss = null;
+      updateLuckyTimerUI();
+    };
 
-    updatePrizeList();
-    updateResults();
+    const showLuckyTimer = ({ prize, winner }) => {
+      luckyTimerState.prize = prize;
+      luckyTimerState.winner = winner;
+      luckyTimerState.boss = luckyPrizeBossMap[prize];
+      luckyTimerState.remaining = 30;
+      luckyTimerState.running = false;
+      updateLuckyTimerUI();
+    };
+
+    const startLuckyTimer = () => {
+      if (!luckyTimerState.prize || luckyTimerState.running) {
+        return;
+      }
+      luckyTimerState.running = true;
+      updateLuckyTimerUI();
+      luckyTimerState.interval = setInterval(() => {
+        luckyTimerState.remaining -= 1;
+        if (luckyTimerState.remaining <= 0) {
+          clearInterval(luckyTimerState.interval);
+          luckyTimerState.interval = null;
+          luckyTimerState.running = false;
+          luckyTimerState.remaining = 0;
+          updateLuckyTimerUI("Time is up.");
+          return;
+        }
+        updateLuckyTimerUI();
+      }, 1000);
+    };
+
+    const updateLuckyTimerUI = (overrideNote) => {
+      if (!luckyTimerPanel) {
+        return;
+      }
+      if (!luckyTimerState.prize) {
+        luckyTimerPanel.classList.add("hidden");
+        return;
+      }
+      luckyTimerPanel.classList.remove("hidden");
+      const boss = luckyTimerState.boss || "Boss";
+      const winner = luckyTimerState.winner || "winner";
+      const note =
+        overrideNote ||
+        `${boss} gives ${winner} a 30s New Year wish or appreciation.`;
+      luckyTimerNote.textContent = note;
+      luckyTimerBadge.textContent = `${luckyTimerState.remaining}s`;
+      startLuckyTimerButton.disabled = luckyTimerState.running;
+    };
+
+    enterButton.addEventListener("click", enterDraw);
+    selectBossButton.addEventListener("click", selectBoss);
+    selectPrizeButton.addEventListener("click", selectPrize);
+    drawWinnerButton.addEventListener("click", drawWinner);
+    startLuckyTimerButton.addEventListener("click", startLuckyTimer);
+
+    if (drawCard) {
+      drawCard.classList.remove("is-rolling");
+    }
   </script>
 </body>
 </html>
