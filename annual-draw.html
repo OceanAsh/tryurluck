@@ -725,7 +725,7 @@
     const prizes = [
       "1st Prize",
       "2nd Prize",
-      "2nd Prize",
+      "3rd Prize",
       "Mystery Lucky Prize A",
       "Mystery Lucky Prize B"
     ];
@@ -861,10 +861,36 @@
       `;
     };
 
+    const isMysteryPrize = (prize) => !!luckyPrizeBossMap[prize];
+
+    const getOtherMysteryWinner = (prize) => {
+      if (!isMysteryPrize(prize)) {
+        return null;
+      }
+      const otherPrize = Object.keys(luckyPrizeBossMap).find((item) => item !== prize);
+      if (!otherPrize) {
+        return null;
+      }
+      const record = state.history.find((entry) => entry.prize === otherPrize);
+      return record ? record.winner : null;
+    };
+
+    const getEligibleWinners = (prize) => {
+      if (!isMysteryPrize(prize)) {
+        return state.remainingParticipants;
+      }
+      const otherWinner = getOtherMysteryWinner(prize);
+      if (!otherWinner) {
+        return [...participants];
+      }
+      return participants.filter((name) => name !== otherWinner);
+    };
+
     const updateButtons = () => {
-      const canSelectBoss = state.remainingParticipants.length > 0 && state.remainingPrizes.length > 0;
+      const canSelectBoss = participants.length > 0 && state.remainingPrizes.length > 0;
       const canSelectPrize = state.remainingPrizes.length > 0;
-      const canDrawWinner = state.remainingParticipants.length > 0 && !!state.currentPrize;
+      const canDrawWinner =
+        !!state.currentPrize && getEligibleWinners(state.currentPrize).length > 0;
       selectBossButton.disabled = state.rolling || state.phase !== "selectBoss" || !canSelectBoss;
       selectPrizeButton.disabled = state.rolling || state.phase !== "selectPrize" || !canSelectPrize;
       drawWinnerButton.disabled = state.rolling || state.phase !== "drawWinner" || !canDrawWinner;
@@ -941,7 +967,7 @@
       if (state.phase !== "drawWinner" || state.rolling) {
         return;
       }
-      if (state.remainingParticipants.length === 0) {
+      if (!state.currentPrize) {
         setPhase("finished", "Draw complete");
         return;
       }
@@ -949,19 +975,29 @@
       setRolling(true);
       updateStatus(`${state.currentBoss} is drawing ${state.currentPrize}...`);
 
-      let current = state.remainingParticipants[0];
+      const eligibleWinners = getEligibleWinners(state.currentPrize);
+      if (eligibleWinners.length === 0) {
+        setRolling(false);
+        setPhase("finished", "No eligible participants");
+        return;
+      }
+
+      let current = eligibleWinners[0];
       rollingName.textContent = current;
 
       const rollingTimer = setInterval(() => {
-        current = randomPick(state.remainingParticipants);
+        current = randomPick(eligibleWinners);
         rollingName.textContent = current;
       }, 80);
 
       const duration = 2200 + Math.floor(Math.random() * 1200);
       setTimeout(() => {
         clearInterval(rollingTimer);
-        const winnerIndex = Math.floor(Math.random() * state.remainingParticipants.length);
-        const winner = state.remainingParticipants.splice(winnerIndex, 1)[0];
+        let winner = randomPick(eligibleWinners);
+        if (!isMysteryPrize(state.currentPrize)) {
+          const winnerIndex = state.remainingParticipants.indexOf(winner);
+          winner = state.remainingParticipants.splice(winnerIndex, 1)[0];
+        }
 
         state.history.push({
           boss: state.currentBoss,
